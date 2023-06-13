@@ -19,7 +19,7 @@ test1 = [
     [5,0,0,0,0,0,0,0,4],
     [0,3,8,0,6,0,0,0,1],
     [0,0,0,0,0,0,0,0,0],
-    [0,8,0,0,0,2,8,7,0],
+    [0,9,0,0,0,2,8,7,0],
     [3,0,0,0,0,1,0,0,0]
 ]
 
@@ -37,7 +37,7 @@ test2 = [
 
 invalidTest1 = [
     [1,0,0,3,0,0,2,0,0],
-    [0,0,0,6,5,7,0,4,0],
+    [0,1,0,6,5,7,0,4,0],
     [7,0,5,1,0,0,0,0,0],
     [0,0,2,0,7,0,0,0,3],
     [5,0,0,0,0,0,0,0,4],
@@ -103,28 +103,40 @@ def getBox(puzzle, n):
         x+=1
     return [row1, row2, row3]
 
-# def isValid(puzzle):
-#     # Do the horizontals
-#     for row in puzzle:
-#         seen = []
-#         for number in row:
-#             if number in seen:
-#                 return False
-#             else:
-#                 seen.append(number)
-#     # Do the verticals
-#     for i in range (0, 9):
-#         seen = []
-#         for j in range (0,9):
-#             number = puzzle[j][i]
-#             if number in seen:
-#                 return False
-#             else:
-#                 seen.append(number)
-#     # Do the boxes
-#     for 
-#     return True
+def isValid(puzzle):
+    # Do the horizontals
+    for row in puzzle:
+        seen = []
+        for number in row:
+            if number in seen and number != 0:
+                print ("Failed on horizontals")
+                print ("Horizontal: " + str(number))
+                return False
+            else:
+                seen.append(number)
+    # Do the verticals
+    for i in range (0, 9):
+        seen = []
+        for j in range (0,9):
+            number = puzzle[j][i]
+            if number in seen and number != 0:
+                print ("Failed on vertcials")
+                print ("Vertical: " + str(number))
+                return False
+            else:
+                seen.append(number)
+    # Do the boxes
+    for i in range(1, 10):
+        box = getBox(puzzle, i)
+        seen = []
+        for row in box:
+            for number in row:
+                if number in seen and number != 0:
+                    print ("Failed on boxes")
+                    print ("Box: " + str(i) + ". Number: " + str(number))
+                    return False
+                else:
+                    seen.append(number)
+    return True
 
-printPuzzle(test1)
-for i in range(1,10):
-    printBox(getBox(test1, i))
+print (isValid(invalidTest1))
