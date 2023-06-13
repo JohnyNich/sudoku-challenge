@@ -43,7 +43,7 @@ invalidTest1 = [
     [5,0,0,0,0,0,0,0,4],
     [0,3,8,0,6,0,0,0,1],
     [0,0,0,0,0,0,0,0,0],
-    [0,8,0,0,0,2,8,7,0],
+    [0,9,0,0,0,2,8,7,0],
     [3,0,0,0,0,1,0,0,0]
 ]
 
@@ -70,11 +70,25 @@ def printPuzzle(puzzle):
             print ("└───┴───┴───┘")
         r += 1
 
+# box should be a 2D array with 3 elements, each with 3 elemnts
+def printBox(box):
+    print ("┌───┐")
+    for row in box:
+        print ("│", end="")
+        for i in range(0,3):
+            n = row[i]
+            if (n != 0):
+                print (n, end="")
+            else:
+                print (" ", end="")
+        print ("│\n", end="")
+    print ("└───┘")
+
 # Gets box n from a puzzle. For example, for test 1, that would be cells (0,0) to [2,2]
 def getBox(puzzle, n):
-    startX = ((n % 3) - 1) * 3
-    startY = math.floor(n / 3) - 1
-    row1, row2, row3 = []
+    startX = ((n-1) % 3) * 3
+    startY = math.floor((n-1) / 3) * 3
+    row1 = row2 = row3 = []
     x = 1
     for i in range(startY, startY + 3):
         row = []
@@ -112,3 +126,5 @@ def getBox(puzzle, n):
 #     return True
 
 printPuzzle(test1)
+for i in range(1,10):
+    printBox(getBox(test1, i))
